@@ -1,0 +1,87 @@
+<a href="[https://example.com](https://example.com)">Enlace de prueba</a> <img src="x" onerror="alert('XSS')">
+
+<b>Texto en negrita injectado</b>
+
+<script>alert('XSS Test')</script>
+
+
+
+https://feel-philosophy-railway-ban.trycloudflare.com/
+administrador.revision@parque.local
+pass: UsuarioLocal-2026Aa9!
+AdminLocal-3728493e9b5dAa9!
+pass: UsuarioLocal-2026Aa9!
+
+
+
+
+eliminar tipo credito
+
+
+deestino
+crecimiento de negocio
+uso personal
+compra de matariales o maquinaria
+
+
+Listado de departamentos
+
+
+Reporteria 
+agregar region --> no se registra
+Agregar DPI
+departamento
+municipio
+
+
+En tabla de reporte agregar
+division
+region 
+telefono
+
+
+
+
+
+inversion en negocio
+compra de materia prima
+gastos familiares
+gastos medicos
+gastos escolares
+construccion/remodelacion
+compra de electrodomesticos
+
+
+
+tema de agencia destino con Luis Hernandez
+
+
+catalogo departamentos y municipios mover a datos del cliente
+mover todo a una pantalla
+
+
+
+registro de freelance (division+codigoagencia)
+						nombregt0199 --> inicio de sesion
+Nombre compledo
+Telefono 
+division 
+agencia
+
+
+cambiar profesion por origen de ingresos
+
+consultar el utilizar logo
+
+
+
+frelance
+Ingreso de cliente
+Perfil
+
+Consultor
+Reportes
+
+Administrador
+Todas las opciones
+
