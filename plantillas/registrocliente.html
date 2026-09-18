@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso de Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>Bienvenido, Melvin</h1>
+                <p>Módulo de registro de prospectos</p>
+            </div>
+            <!-- Botón Volver al Menú -->
+            <a href="menu.html" class="btn-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Menú</span>
+            </a>
+        </header>
+
+        <!-- Indicador visual de pasos -->
+        <div class="steps-indicator">
+            <div class="step-tab active" id="tab-1">
+                <span class="step-number">1</span>
+                <span>Datos del Cliente</span>
+            </div>
+            <div class="step-tab" id="tab-2">
+                <span class="step-number">2</span>
+                <span>Datos del Crédito</span>
+            </div>
+        </div>
+
+            <form id="prospectForm" action="" method="POST" onsubmit="handleSubmit(event)">
+                <div class="card">
+                
+                <!-- PASO 1: Datos del cliente -->
+                <section class="step-content active" id="step-1">
+                    <h2 class="card-title">Datos del cliente</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dpi">DPI</label>
+                            <input type="text" id="dpi" name="dpi" required pattern="[0-9]{13}" maxlength="13" placeholder="Ej. 2480123450101" title="Ingrese un DPI válido de 13 dígitos">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombres">Nombres</label>
+                            <input type="text" id="nombres" name="nombres" required placeholder="Ingrese nombres">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apellidos">Apellidos</label>
+                            <input type="text" id="apellidos" name="apellidos" required placeholder="Ingrese apellidos">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono" required placeholder="Ej. 5555-5555" maxlength = "8">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estado_civil">Estado Civil</label>
+                            <select id="estado_civil" name="estado_civil" required>
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                <option value="soltero">Soltero/a</option>
+                                <option value="casado">Casado/a</option>
+                                <option value="divorciado">Divorciado/a</option>
+                                <option value="viudo">Viudo/a</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" id="direccion" name="direccion" required placeholder="Dirección completa de residencia">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="profesion">Profesión u Oficio</label>
+                            <input type="text" id="profesion" name="profesion" required placeholder="Ej. Ingeniero, Comerciante...">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PASO 2: Datos del crédito -->
+                <section class="step-content" id="step-2">
+                    <h2 class="card-title">Datos del Crédito</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tipo_credito">Tipo de Crédito</label>
+                            <select id="tipo_credito" name="tipo_credito" required>
+                                <option value="" disabled selected>Seleccione tipo</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Productivo">Productivo</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="monto_solicitado">Monto Solicitado (Q)</label>
+                            <input type="number" id="monto_solicitado" name="monto_solicitado" step="0.01" min="1" required placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destino_fondos">Destino de Fondos</label>
+                            <select name="destino" id="destino">
+                                <option value="" disabled select>Seleccine una opcion</option>
+                                <option value= "Personal">Personal</option>
+                                <option value="Expansion">Expansion</option>
+                                <option value="Materiaprima">Materia Prima</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="agencia_destino">Agencia Destino</label>
+                            <select id="agencia_destino" name="agencia_destino" required>
+                                <option value="" disabled selected>Seleccione una agencia</option>
+                                <option value="Zacapa">Zacapa</option>
+                                <option value="Chiquimula">Chiquimula</option>
+                                <option value="Jalapa">Jalapa</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navegación de Botones -->
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary hidden" id="btnPrev" onclick="changeStep(-1, event)">Anterior</button>
+                    <button type="button" class="btn btn-primary" id="btnNext" onclick="handleNextClick(event)">Siguiente</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 2;
+
+        function validateCurrentStep() {
+            const currentSection = document.getElementById(`step-${currentStep}`);
+            const inputs = currentSection.querySelectorAll('input, select');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.reportValidity();
+                    isValid = false;
+                    return false;
+                }
+            });
+
+            return isValid;
+        }
+
+        function changeStep(delta, event) {
+            if (event) event.preventDefault();
+
+            const newStep = currentStep + delta;
+            if (newStep < 1 || newStep > totalSteps) return;
+
+            // Transición de clases para las vistas
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            document.getElementById(`tab-${currentStep}`).classList.remove('active');
+
+            currentStep = newStep;
+
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            document.getElementById(`tab-${currentStep}`).classList.add('active');
+
+            // Control de visibilidad y texto en botones
+            const btnPrev = document.getElementById('btnPrev');
+            const btnNext = document.getElementById('btnNext');
+
+            if (currentStep === 1) {
+                btnPrev.classList.add('hidden');
+            } else {
+                btnPrev.classList.remove('hidden');
+            }
+
+            if (currentStep === totalSteps) {
+                btnNext.textContent = 'Ingresar Registro';
+            } else {
+                btnNext.textContent = 'Siguiente';
+            }
+        }
+
+        function handleNextClick(event) {
+            event.preventDefault();
+
+            // Validar campos del paso actual antes de avanzar
+            if (!validateCurrentStep()) return;
+
+            if (currentStep < totalSteps) {
+                changeStep(1, event);
+            } else {
+                // Envío final cuando se está en la última etapa
+                const form = document.getElementById('prospectForm');
+                if (form.requestSubmit) {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            }
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('¡Registro ingresado con éxito!');
+            // Redireccionar o resetear el formulario según sea necesario
+             window.location.href = 'registrocliente.html';
+        }
+    </script>
+</body>
+</html>

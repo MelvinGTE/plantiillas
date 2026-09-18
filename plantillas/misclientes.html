@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header con Botón de Regreso -->
+        <header class="header">
+            <div>
+                <h1>Mis Clientes</h1>
+                <p>Consulta y gestiona la cartera de clientes y prospectos registrados</p>
+            </div>
+            <a href="menu.html" class="btn-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Menú Principal</span>
+            </a>
+        </header>
+
+        <!-- Tarjeta Principal de Contenido -->
+        <section class="card">
+            
+            <!-- Barra Superior: Búsqueda y Acción Principal -->
+            <div class="results-header" style="margin-bottom: 1.5rem;">
+                <div class="form-group" style="margin-bottom: 0; min-width: 280px; flex: 1; max-width: 400px;">
+                    <input type="text" id="searchInput" onkeyup="searchClients()" placeholder="Buscar por DPI, Nombre o Teléfono...">
+                </div>
+
+                <div class="export-actions">
+                    <a href="registrocliente.html" class="btn btn-primary" style="text-decoration: none;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Nuevo Cliente
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tabla de Clientes -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>DPI</th>
+                            <th>Nombre Completo</th>
+                            <th>Teléfono</th>
+                            <th>Estado Civil</th>
+                            <th>Profesión</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTableBody">
+                        <!-- Filas dinámicas -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer con Contador -->
+            <div style="margin-top: 1rem; color: var(--text-muted, #64748b); font-size: 0.875rem;">
+                Mostrando <strong id="totalClients">0</strong> cliente(s)
+            </div>
+
+        </section>
+    </div>
+
+    <script>
+        // Datos simulados de clientes
+        const clientsData = [
+            { dpi: '2480123450101', nombre: 'Carlos Mendoza', telefono: '5555-0192', estadoCivil: 'Casado/a', profesion: 'Ingeniero Civil', estado: 'Activo' },
+            { dpi: '1982341230101', nombre: 'Ana María López', telefono: '4123-9876', estadoCivil: 'Soltero/a', profesion: 'Comerciante', estado: 'Activo' },
+            { dpi: '3012984750101', nombre: 'Roberto Gómez', telefono: '5890-1122', estadoCivil: 'Soltero/a', profesion: 'Arquitecto', estado: 'Inactivo' },
+            { dpi: '2210459870101', nombre: 'Lucía Fernández', telefono: '3045-6789', estadoCivil: 'Casado/a', profesion: 'Docente', estado: 'Activo' },
+            { dpi: '2654128900101', nombre: 'Mario Estrada', telefono: '4567-8901', estadoCivil: 'Divorciado/a', profesion: 'Abogado', estado: 'En Revisión' }
+        ];
+
+        function renderClients(data) {
+            const tableBody = document.getElementById('clientsTableBody');
+            tableBody.innerHTML = '';
+
+            if (data.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #94a3b8; padding: 2rem;">
+                            No se encontraron clientes que coincidan con la búsqueda.
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('totalClients').textContent = '0';
+                return;
+            }
+
+            data.forEach(client => {
+                let badgeClass = 'badge-success';
+                if (client.estado === 'Inactivo') badgeClass = 'badge-danger';
+                if (client.estado === 'En Revisión') badgeClass = 'badge-warning';
+
+                const row = `
+                    <tr>
+                        <td><strong>${client.dpi}</strong></td>
+                        <td>${client.nombre}</td>
+                        <td>${client.telefono}</td>
+                        <td>${client.estadoCivil}</td>
+                        <td>${client.profesion}</td>
+                        <td><span class="badge ${badgeClass}">${client.estado}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button type="button" class="btn btn-outline" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;" onclick="viewClient('${client.dpi}')" title="Ver Detalle">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-outline" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;" onclick="editClient('${client.dpi}')" title="Editar">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+
+            document.getElementById('totalClients').textContent = data.length;
+        }
+
+        function searchClients() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const filtered = clientsData.filter(client => 
+                client.dpi.toLowerCase().includes(query) ||
+                client.nombre.toLowerCase().includes(query) ||
+                client.telefono.toLowerCase().includes(query)
+            );
+            renderClients(filtered);
+        }
+
+        function viewClient(dpi) {
+            alert(`Visualizando información del cliente con DPI: ${dpi}`);
+        }
+
+        function editClient(dpi) {
+            alert(`Editando cliente con DPI: ${dpi}`);
+        }
+
+        // Cargar tabla al iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderClients(clientsData);
+        });
+    </script>
+</body>
+</html>
